@@ -14,6 +14,7 @@ class QuestionTableViewCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var answersCountLabel: UILabel!
     @IBOutlet weak var viewsCountLabel: UILabel!
+    @IBOutlet weak var userImageView: UIImageView!
     
     
     override func awakeFromNib() {
