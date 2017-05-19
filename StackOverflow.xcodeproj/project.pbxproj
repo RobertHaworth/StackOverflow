@@ -67,6 +67,71 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		4A054A2C1ECE836E00545EEC /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				4A054A331ECE83DF00545EEC /* Assets */,
+				4A054A321ECE83D400545EEC /* Storyboards */,
+				4A054A311ECE83AD00545EEC /* Cells */,
+				4A054A2F1ECE839800545EEC /* ViewControllers */,
+			);
+			name = "User Interface";
+			sourceTree = "<group>";
+		};
+		4A054A2D1ECE837B00545EEC /* Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A11C6721ECB5B9900E29E0B /* Question.swift */,
+				4ADFDE5F1ECC95A400DAACDC /* User.swift */,
+				4A11C6741ECB5BA700E29E0B /* Answer.swift */,
+			);
+			name = "Data Model";
+			sourceTree = "<group>";
+		};
+		4A054A2E1ECE838700545EEC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4A11C6701ECB574200E29E0B /* ServerManager.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		4A054A2F1ECE839800545EEC /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4ADFDE611ECCF1E300DAACDC /* QuestionsTableViewController.swift */,
+				4ADFDE631ECE3BED00DAACDC /* QuestionDetailTableViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4A054A311ECE83AD00545EEC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4A27D51C1ECB548A009598BA /* QuestionTableViewCell.swift */,
+				4ADFDE671ECE4C1400DAACDC /* QuestionDetailTableViewCell.swift */,
+				4A054A2A1ECE71C600545EEC /* AnswerDetailTableViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		4A054A321ECE83D400545EEC /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				4A27D50E1ECB4EA1009598BA /* Main.storyboard */,
+				4A27D5131ECB4EA1009598BA /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		4A054A331ECE83DF00545EEC /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				4A27D5111ECB4EA1009598BA /* Assets.xcassets */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		4A27D4FE1ECB4EA1009598BA = {
 			isa = PBXGroup;
 			children = (
@@ -88,21 +153,12 @@
 		4A27D5091ECB4EA1009598BA /* StackOverflow */ = {
 			isa = PBXGroup;
 			children = (
-				4ADFDE611ECCF1E300DAACDC /* QuestionsTableViewController.swift */,
 				4A27D50A1ECB4EA1009598BA /* AppDelegate.swift */,
-				4A27D50E1ECB4EA1009598BA /* Main.storyboard */,
-				4A27D5111ECB4EA1009598BA /* Assets.xcassets */,
-				4A27D5131ECB4EA1009598BA /* LaunchScreen.storyboard */,
+				4A054A2E1ECE838700545EEC /* Controller */,
+				4A054A2D1ECE837B00545EEC /* Data Model */,
+				4A054A2C1ECE836E00545EEC /* User Interface */,
 				4A27D5161ECB4EA1009598BA /* Info.plist */,
-				4A27D51C1ECB548A009598BA /* QuestionTableViewCell.swift */,
-				4A11C6701ECB574200E29E0B /* ServerManager.swift */,
 				4A11C6761ECB9BFF00E29E0B /* access_key.txt */,
-				4A11C6721ECB5B9900E29E0B /* Question.swift */,
-				4ADFDE5F1ECC95A400DAACDC /* User.swift */,
-				4A11C6741ECB5BA700E29E0B /* Answer.swift */,
-				4ADFDE631ECE3BED00DAACDC /* QuestionDetailTableViewController.swift */,
-				4ADFDE671ECE4C1400DAACDC /* QuestionDetailTableViewCell.swift */,
-				4A054A2A1ECE71C600545EEC /* AnswerDetailTableViewCell.swift */,
 			);
 			path = StackOverflow;
 			sourceTree = "<group>";
