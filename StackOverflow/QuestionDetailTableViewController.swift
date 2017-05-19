@@ -133,11 +133,11 @@ class QuestionDetailTableViewController: UITableViewController {
                 
                 if question?.guessedAnswerID != -1 {
                     //answered
-                    if (question?.guessedAnswerID == answer.answerId) && !answer.isAccepted {
+                    if (question?.guessedAnswerID == answer.id) && !answer.isAccepted {
                         // This is the guessed answer but not the correct one
                         answerCell.state = .userAnswer
                         
-                    } else if (question?.guessedAnswerID == answer.answerId) && answer.isAccepted {
+                    } else if (question?.guessedAnswerID == answer.id) && answer.isAccepted {
                         answerCell.state = [.userAnswer, .correctAnswer]
                     } else if answer.isAccepted {
                         answerCell.state = .correctAnswer
@@ -162,7 +162,7 @@ class QuestionDetailTableViewController: UITableViewController {
         
         
         
-        guard let answerID = question?.answers?[indexPath.row].answerId else {
+        guard let answerID = question?.answers?[indexPath.row].id else {
             return
         }
         

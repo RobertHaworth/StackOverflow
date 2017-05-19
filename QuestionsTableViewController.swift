@@ -8,7 +8,7 @@
 
 import UIKit
 
-class QuestionsTableViewController: UITableViewController, UISearchController {
+class QuestionsTableViewController: UITableViewController {
     
     
     fileprivate let QuestionCellIdentifier = "QuestionCell"
@@ -56,11 +56,23 @@ class QuestionsTableViewController: UITableViewController, UISearchController {
             }
             let question = questionArray[indexPath.row]
             
-            print(question.body!)
-            cellCast.questionLabel.text = question.title
+            cellCast.questionLabel.attributedText = question.title
             cellCast.authorLabel.text = question.owner?.name
             cellCast.viewsCountLabel.text = "\(question.viewCount)"
             cellCast.answersCountLabel.text = "\(question.answerCount)"
+            guard let profileImageString = question.owner?.profileImageURL else {
+                print("no image found")
+                return
+            }
+            
+            guard let url = URL(string: profileImageString) else {
+                print("unable to make url from string")
+                return
+            }
+
+            
+            
+            cellCast.userImageView.af_setImage(withURL: url, placeholderImage: UIImage(named:"rex_nuke"), filter: nil, progress: nil, progressQueue: DispatchQueue.main, imageTransition: UIImageView.ImageTransition.noTransition, runImageTransitionIfCached: true, completion: nil)
             
         }
     }
@@ -92,7 +104,7 @@ class QuestionsTableViewController: UITableViewController, UISearchController {
     func transitionTableView() {
         guessedOnly = !guessedOnly
         
-        UIView.transition(with: tableView, duration: 2.0, options: .transitionFlipFromLeft, animations: { [weak self] in
+        UIView.transition(with: tableView, duration: 1.0, options: .transitionFlipFromLeft, animations: { [weak self] in
             self?.tableView.reloadData()
         }) { complete in
         }

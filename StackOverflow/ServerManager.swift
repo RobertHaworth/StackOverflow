@@ -75,7 +75,7 @@ final class ServerManager {
      * - shallow_user.profile_image
      * - shallow_user.user_id
      */
-    private let filterID = "!6hzkvyA.hkWzE59CE7F2zh*RIJdgY3MzpQGGpGL(Q(jFdT"
+    private let filterID = "!*PH)1XQi-VSL7rkKdKIAsJKjmXG3_0Dtj5hvUh)DF_)BPFzDP"
     
     
     class var sharedInstance:ServerManager {
@@ -96,7 +96,7 @@ final class ServerManager {
                         return
                     }
                 
-                    let questionArray = itemsArray.map({ return Question(questionDictionary:$0)})
+                    let questionArray = itemsArray.map({ return Question(dictionary:$0)})
                     QuestionManager.sharedInstance.updateQuestions(newQuestions: questionArray)
                     completion?()
                 default:
@@ -108,7 +108,7 @@ final class ServerManager {
     }
     
     func getAnswers(question:Question, completion:(() -> ())?) {
-        guard let questionID = question.questionId else {
+        guard let questionID = question.id else {
             self.presentError(error: StackoverflowError.questionIDMissing)
             completion?()
             return
@@ -127,7 +127,7 @@ final class ServerManager {
                         return
                     }
                 
-                    question.answers = items.map({ return Answer(answerDictionary: $0)})
+                    question.answers = items.map({ return Answer(dictionary: $0)})
                     completion?()
                 default:
                     print("Success with non-dictionary root")

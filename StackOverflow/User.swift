@@ -21,7 +21,11 @@ class User {
         }
     }
     
-    var userImage:UIImage?
+    var profileImageURL:String? {
+        get {
+            return userDictionary["profile_image"] as? String
+        }
+    }
     
     fileprivate let userDictionary:Dictionary<String, AnyObject>
     
