@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4A054A2B1ECE71C600545EEC /* AnswerDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A054A2A1ECE71C600545EEC /* AnswerDetailTableViewCell.swift */; };
 		4A054A351ECE86FF00545EEC /* QuestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A054A341ECE86FF00545EEC /* QuestionManager.swift */; };
+		4A054A371ECE950800545EEC /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A054A361ECE950800545EEC /* Tag.swift */; };
 		4A11C6711ECB574200E29E0B /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A11C6701ECB574200E29E0B /* ServerManager.swift */; };
 		4A11C6731ECB5B9900E29E0B /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A11C6721ECB5B9900E29E0B /* Question.swift */; };
 		4A11C6751ECB5BA700E29E0B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A11C6741ECB5BA700E29E0B /* Answer.swift */; };
@@ -29,6 +30,7 @@
 		1D9E8FCAFF92A5CFFD2E88E5 /* Pods-StackOverflow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StackOverflow.release.xcconfig"; path = "Pods/Target Support Files/Pods-StackOverflow/Pods-StackOverflow.release.xcconfig"; sourceTree = "<group>"; };
 		4A054A2A1ECE71C600545EEC /* AnswerDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnswerDetailTableViewCell.swift; sourceTree = "<group>"; };
 		4A054A341ECE86FF00545EEC /* QuestionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionManager.swift; sourceTree = "<group>"; };
+		4A054A361ECE950800545EEC /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		4A11C6701ECB574200E29E0B /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
 		4A11C6721ECB5B9900E29E0B /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		4A11C6741ECB5BA700E29E0B /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 				4A11C6721ECB5B9900E29E0B /* Question.swift */,
 				4ADFDE5F1ECC95A400DAACDC /* User.swift */,
 				4A11C6741ECB5BA700E29E0B /* Answer.swift */,
+				4A054A361ECE950800545EEC /* Tag.swift */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A054A371ECE950800545EEC /* Tag.swift in Sources */,
 				4ADFDE621ECCF1E300DAACDC /* QuestionsTableViewController.swift in Sources */,
 				4A11C6731ECB5B9900E29E0B /* Question.swift in Sources */,
 				4ADFDE681ECE4C1400DAACDC /* QuestionDetailTableViewCell.swift in Sources */,

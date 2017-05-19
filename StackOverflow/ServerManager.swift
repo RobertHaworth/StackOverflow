@@ -75,7 +75,7 @@ final class ServerManager {
      * - shallow_user.profile_image
      * - shallow_user.user_id
      */
-    private let filterID = "!6hYwaMYYB30hnyqICyjr2vmSM0IaIp8QtYpm*XUPYa*WML"
+    private let filterID = "!6hzkvyA.hkWzE59CE7F2zh*RIJdgY3MzpQGGpGL(Q(jFdT"
     
     
     class var sharedInstance:ServerManager {
@@ -119,7 +119,7 @@ final class ServerManager {
                     print("error found: \(error)")
                     self?.presentError(error: error)
                 case .success(let dataValue as Dictionary<String, AnyObject>):
-                    print(dataValue)
+//                    print(dataValue)
                     guard let items = dataValue["items"] as? Array<Dictionary<String, AnyObject>> else {
                         print("unable to find items array")
                         self?.presentError(error: StackoverflowError.itemArrayMissing)
@@ -133,6 +133,35 @@ final class ServerManager {
                     print("Success with non-dictionary root")
                     self?.presentError(error: StackoverflowError.dictionaryMissing)
                     completion?()
+            }
+        }
+    }
+    
+    func getTags(completion:(([Tag]?) -> ())?) {
+        Alamofire.request(apiURL + "/tags?order=desc&sort=popular&site=\(site)", method: .get, parameters: nil, encoding: JSONEncoding(options:.prettyPrinted), headers: serverHeaders).responseJSON { [weak self] dataResponse in
+            switch dataResponse.result {
+                case .failure(let error):
+                    self?.presentError(error: error)
+                    completion?(nil)
+                    return
+                case .success(let dataValue as Dictionary<String, AnyObject>):
+                    print(dataValue)
+                
+                    guard let items = dataValue["items"] as? Array<Dictionary<String, AnyObject>> else {
+                        print("unable to find items array")
+                        self?.presentError(error: StackoverflowError.itemArrayMissing)
+                        completion?(nil)
+                        return
+                    }
+                
+                    let tagArray = items.map({return Tag(tagDictionary: $0)})
+                    completion?(tagArray)
+                    return
+                default:
+                    print("Success within non-dictionary root")
+                    self?.presentError(error: StackoverflowError.dictionaryMissing)
+                    completion?(nil)
+                    return
             }
         }
     }

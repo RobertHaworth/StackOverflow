@@ -8,16 +8,15 @@
 
 import UIKit
 
-class QuestionsTableViewController: UITableViewController {
+class QuestionsTableViewController: UITableViewController, UISearchController {
     
     
     fileprivate let QuestionCellIdentifier = "QuestionCell"
-    
     private var guessedOnly = false
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         ServerManager.sharedInstance.getQuestions { [weak self] in
             self?.tableView.reloadData()
         }
@@ -45,10 +44,6 @@ class QuestionsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: QuestionCellIdentifier, for: indexPath)
-
-        
-        // Configure the cell...
-
         return cell
     }
     
@@ -90,7 +85,13 @@ class QuestionsTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func didPressGuessed(_ sender: UIButton) {
+    @IBAction func segmentControllValueChanged(_ sender: UISegmentedControl) {
+        guessedOnly = sender.selectedSegmentIndex == 1 ? false : true
+        transitionTableView()
+    }
+    func transitionTableView() {
+        guessedOnly = !guessedOnly
+        
         UIView.transition(with: tableView, duration: 2.0, options: .transitionFlipFromLeft, animations: { [weak self] in
             self?.tableView.reloadData()
         }) { complete in
