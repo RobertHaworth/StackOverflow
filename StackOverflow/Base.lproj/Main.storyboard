@@ -107,7 +107,18 @@
                             <outlet property="delegate" destination="hxB-0t-ynX" id="aLD-cc-XFX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Questions" id="ZNu-v6-3Se"/>
+                    <navigationItem key="navigationItem" title="Questions" id="ZNu-v6-3Se">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="Otn-8t-Aon">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ptc-f5-ORS">
+                                <rect key="frame" x="16" y="7" width="83" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Guessed"/>
+                                <connections>
+                                    <action selector="didPressGuessed:" destination="hxB-0t-ynX" eventType="touchUpInside" id="cqJ-0X-s6A"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g1F-To-Dgx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

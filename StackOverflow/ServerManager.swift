@@ -81,9 +81,10 @@ final class ServerManager {
     class var sharedInstance:ServerManager {
         return _sharedInstance
     }
-
-    func getQuestions(completion:(([Question]?) -> ())?) {
+    
+    func getQuestions(completion:(() -> ())?) {
         // Add back in for filter - &filter=!)-gqw_JGd9NoFjDkbjrsrj*5Sz4-e(R2.8geoP_Q&key=\(StackOverflowAPIKey)
+        
         Alamofire.request(apiURL + "/search/advanced?order=desc&sort=activity&accepted=True&answers=2&site=\(site)&filter=\(filterID)", method: .get, parameters: nil, encoding: JSONEncoding(options:.prettyPrinted), headers: serverHeaders).responseJSON { [weak self] dataResponse in
             switch dataResponse.result {
                 case .failure(let error):
@@ -91,16 +92,17 @@ final class ServerManager {
                 case .success(let dataValue as Dictionary<String, AnyObject>):
                     guard let itemsArray = dataValue["items"] as? Array<Dictionary<String, AnyObject>> else {
                         self?.presentError(error: StackoverflowError.itemArrayMissing)
-                        completion?(nil)
+                        completion?()
                         return
                     }
                 
                     let questionArray = itemsArray.map({ return Question(questionDictionary:$0)})
-                    completion?(questionArray)
+                    QuestionManager.sharedInstance.updateQuestions(newQuestions: questionArray)
+                    completion?()
                 default:
                     print("Success with non-dictionary root")
                     self?.presentError(error: StackoverflowError.dictionaryMissing)
-                    completion?(nil)
+                    completion?()
             }
         }
     }

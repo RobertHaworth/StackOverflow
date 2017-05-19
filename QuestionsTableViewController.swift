@@ -10,20 +10,15 @@ import UIKit
 
 class QuestionsTableViewController: UITableViewController {
     
-    var questionsArray:Array<Question> = []
     
     fileprivate let QuestionCellIdentifier = "QuestionCell"
+    
+    private var guessedOnly = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        ServerManager.sharedInstance.getQuestions { [weak self] questionArray in
-            guard let array = questionArray else {
-                print("array not returned.")
-                return
-            }
-            
-            self?.questionsArray = array
+        ServerManager.sharedInstance.getQuestions { [weak self] in
             self?.tableView.reloadData()
         }
     }
@@ -40,7 +35,7 @@ class QuestionsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return questionsArray.count
+        return QuestionManager.sharedInstance.questions(guessedOnly: guessedOnly).count
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -59,11 +54,12 @@ class QuestionsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cellCast = cell as? QuestionTableViewCell {
-            guard indexPath.row < questionsArray.count else {
+            let questionArray = QuestionManager.sharedInstance.questions(guessedOnly: guessedOnly)
+            guard indexPath.row < questionArray.count else {
                 print("no question found for cell")
                 return
             }
-            let question = questionsArray[indexPath.row]
+            let question = questionArray[indexPath.row]
             
             print(question.body!)
             cellCast.questionLabel.text = question.title
@@ -90,7 +86,14 @@ class QuestionsTableViewController: UITableViewController {
                 return
             }
             
-            answersDetailController.question = questionsArray[row]
+            answersDetailController.question = QuestionManager.sharedInstance.questions(guessedOnly: guessedOnly)[row]
+        }
+    }
+    
+    @IBAction func didPressGuessed(_ sender: UIButton) {
+        UIView.transition(with: tableView, duration: 2.0, options: .transitionFlipFromLeft, animations: { [weak self] in
+            self?.tableView.reloadData()
+        }) { complete in
         }
     }
 }
