@@ -6,9 +6,6 @@
 build/
 DerivedData/
 
-## Custom ignore file for security purposes
-StackOverflow/access_key.txt
-
 ## Various settings
 *.pbxuser
 !default.pbxuser

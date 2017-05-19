@@ -33,29 +33,36 @@ enum StackoverflowError:Error {
 
 final class ServerManager {
     
-//    private let StackOverflowAPIKey = "invalid"
-    
     private let site = "stackoverflow"
     
     /* Custom Stackoverflow Filter mask ID
      *
      * This filter ID represents a filter that will return back the properties listed below
      *
-     * - answer.accepted
+     * - backoff
+     * - error_id
+     * - error_message
+     * - error_name
+     * - has_more
+     * - items
+     * - quota_max
+     * - quota_remaining
      * - answer.answer_id
      * - answer.body
      * - answer.is_accepted
+     * - answer.link
      * - answer.owner
      * - answer.question_id
      * - answer.score
      * - answer.title
-     * - answer.up_vote_count
      * - error.description
      * - error.error_id
      * - error.error_name
+     * - filter.filter
+     * - filter.filter_type
+     * - filter.included_fields
      * - question.accepted_answer_id
      * - question.answer_count
-     * - question.answers
      * - question.body
      * - question.is_answered
      * - question.owner
@@ -65,7 +72,6 @@ final class ServerManager {
      * - question.title
      * - question.view_count
      * - shallow_user.display_name
-     * - shallow_user.link
      * - shallow_user.profile_image
      * - shallow_user.user_id
      */
