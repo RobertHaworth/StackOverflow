@@ -65,11 +65,32 @@ class QuestionsTableViewController: UITableViewController {
             }
             let question = questionsArray[indexPath.row]
             
+            print(question.body!)
             cellCast.questionLabel.text = question.title
             cellCast.authorLabel.text = question.owner?.name
             cellCast.viewsCountLabel.text = "\(question.viewCount)"
             cellCast.answersCountLabel.text = "\(question.answerCount)"
             
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AnswersSegue" {
+            guard let answersDetailController = segue.destination as? QuestionDetailTableViewController else {
+                return
+            }
+            
+            guard let cell = sender as? UITableViewCell else {
+                print("AnswersSegue triggered from non cell object")
+                return
+            }
+            
+            guard let row = tableView.indexPath(for: cell)?.row else {
+                print("row not found")
+                return
+            }
+            
+            answersDetailController.question = questionsArray[row]
         }
     }
 }

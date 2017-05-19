@@ -98,6 +98,7 @@
                                     <outlet property="questionLabel" destination="LNH-1G-TZp" id="fOe-Ef-gpu"/>
                                     <outlet property="userImageView" destination="kds-bD-coD" id="lL7-UN-zkO"/>
                                     <outlet property="viewsCountLabel" destination="8Yj-6h-GDA" id="1fd-kK-Kau"/>
+                                    <segue destination="csj-jg-Rvs" kind="show" identifier="AnswersSegue" id="tH7-vg-qRz"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -111,6 +112,89 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g1F-To-Dgx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="629.60000000000002" y="38.23088455772114"/>
+        </scene>
+        <!--Question Detail Table View Controller-->
+        <scene sceneID="mHH-jF-xYp">
+            <objects>
+                <tableViewController id="csj-jg-Rvs" customClass="QuestionDetailTableViewController" customModule="StackOverflow" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="137" sectionHeaderHeight="18" sectionFooterHeight="18" id="Ozh-ic-NWX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="QuestionDetailCell" rowHeight="150" id="55Z-6Y-TBS" customClass="QuestionDetailTableViewCell" customModule="StackOverflow" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="55Z-6Y-TBS" id="IKC-rW-GOD">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmU-m5-DbG">
+                                            <rect key="frame" x="16" y="12" width="343" height="133.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                        </textView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="jmU-m5-DbG" firstAttribute="leading" secondItem="IKC-rW-GOD" secondAttribute="leadingMargin" constant="8" id="9a0-jT-aM2"/>
+                                        <constraint firstAttribute="bottom" secondItem="jmU-m5-DbG" secondAttribute="bottom" constant="4" id="L4z-70-m6T"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="jmU-m5-DbG" secondAttribute="trailing" constant="8" id="Rfm-b4-jU9"/>
+                                        <constraint firstItem="jmU-m5-DbG" firstAttribute="top" secondItem="IKC-rW-GOD" secondAttribute="topMargin" constant="4" id="uLQ-OD-Q6d"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="bodyTextView" destination="jmU-m5-DbG" id="pXi-BJ-iH7"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AnswerDetailCell" rowHeight="150" id="J7L-F6-XV1" customClass="AnswerDetailTableViewCell" customModule="StackOverflow" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="205.5" width="375" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J7L-F6-XV1" id="NIr-6b-QPG">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="149.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Opr-fh-4La">
+                                            <rect key="frame" x="16" y="12" width="343" height="33"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                        </textView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Tap to Guess" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nv5-2x-kxi">
+                                            <rect key="frame" x="0.0" y="49" width="375" height="96.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Opr-fh-4La" firstAttribute="top" secondItem="NIr-6b-QPG" secondAttribute="topMargin" constant="4" id="0Dj-tE-c74"/>
+                                        <constraint firstItem="Opr-fh-4La" firstAttribute="leading" secondItem="NIr-6b-QPG" secondAttribute="leadingMargin" constant="8" id="1NZ-9b-J6u"/>
+                                        <constraint firstItem="Nv5-2x-kxi" firstAttribute="top" secondItem="Opr-fh-4La" secondAttribute="bottom" constant="4" id="IXF-3w-Hrl"/>
+                                        <constraint firstAttribute="bottom" secondItem="Nv5-2x-kxi" secondAttribute="bottom" constant="4" id="Jdo-W4-xAx"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Opr-fh-4La" secondAttribute="trailing" constant="8" id="gcg-ZG-Vzd"/>
+                                        <constraint firstItem="Nv5-2x-kxi" firstAttribute="centerX" secondItem="NIr-6b-QPG" secondAttribute="centerX" id="luE-hn-h7K"/>
+                                        <constraint firstItem="Nv5-2x-kxi" firstAttribute="leading" secondItem="NIr-6b-QPG" secondAttribute="leading" id="scO-fh-T05"/>
+                                        <constraint firstAttribute="trailing" secondItem="Nv5-2x-kxi" secondAttribute="trailing" id="wR2-dv-7oo"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="bodyTextView" destination="Opr-fh-4La" id="fmi-pZ-IYt"/>
+                                    <outlet property="tapToGuessLabel" destination="Nv5-2x-kxi" id="vV4-Bo-uxn"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="csj-jg-Rvs" id="8kY-3s-cNz"/>
+                            <outlet property="delegate" destination="csj-jg-Rvs" id="W4t-Z9-Tcr"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3bO-uw-dPz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1359.2" y="38.23088455772114"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="zDK-wz-UEF">

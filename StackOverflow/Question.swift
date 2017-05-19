@@ -12,7 +12,7 @@ class Question {
 
     var answerCount:Int {
         get {
-            guard let unwrappedCount = backingDict["answer_count"] as? Int else {
+            guard let unwrappedCount = dataDictionary["answer_count"] as? Int else {
                 return 0
             }
             return unwrappedCount
@@ -21,28 +21,28 @@ class Question {
     
     var isAnswered:Bool? {
         get {
-            return backingDict["is_answered"] as? Bool
+            return dataDictionary["is_answered"] as? Bool
         }
     }
     
     var questionId:Int? {
         get {
-            return backingDict["question_id"] as? Int
+            return dataDictionary["question_id"] as? Int
         }
     }
     var score:Int? {
         get {
-            return backingDict["score"] as? Int
+            return dataDictionary["score"] as? Int
         }
     }
     var title:String? {
         get {
-            return backingDict["title"] as? String
+            return dataDictionary["title"] as? String
         }
     }
     var viewCount:Int {
         get {
-            guard let unwrappedCount = backingDict["view_count"] as? Int else {
+            guard let unwrappedCount = dataDictionary["view_count"] as? Int else {
                 return 0
             }
             return unwrappedCount
@@ -50,7 +50,7 @@ class Question {
     }
     var link:String? {
         get {
-            return backingDict["link"] as? String
+            return dataDictionary["link"] as? String
         }
     }
     
@@ -60,20 +60,42 @@ class Question {
         }
     }
     
+    // Initialize with default values
+    var guessedAnswerID:Int = -1
+    
+    var body:NSAttributedString? {
+        get {
+            let data = (dataDictionary["body"] as? String)?.data(using: String.Encoding.unicode)
+            
+            do {
+                let string = try NSAttributedString(data: data!, options: [NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType], documentAttributes: nil)
+                
+                return string
+            } catch let error as NSError {
+                print("unable to convert body to attributed string for HTML string interpolation \n \(error)")
+                return nil
+            }
+        }
+    }
+    
     var owner:User?
     var answers:[Answer]?
     
-    private let backingDict:Dictionary<String, AnyObject>
+    private let dataDictionary:Dictionary<String, AnyObject>
     
-    init(questionDict:Dictionary<String, AnyObject>) {
-        backingDict = questionDict
+    init(questionDictionary:Dictionary<String, AnyObject>) {
+        dataDictionary = questionDictionary
         
-        guard let ownerDictionary = backingDict["owner"] as? Dictionary<String, AnyObject> else {
+        guard let ownerDictionary = dataDictionary["owner"] as? Dictionary<String, AnyObject> else {
             print("no owner found")
             return
         }
         
         owner = User(userDict: ownerDictionary)
+    }
+    
+    func selectGuess(answerID:Int) {
+        guessedAnswerID = answerID
     }
     
 }
