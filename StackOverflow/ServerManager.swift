@@ -75,7 +75,7 @@ final class ServerManager {
      * - shallow_user.profile_image
      * - shallow_user.user_id
      */
-    private let filterID = "!*PH)1XQi-VSL7rkKdKIAsJKjmXG3_0Dtj5hvUh)DF_)BPFzDP"
+    private let filterID = "!)TMXTVHp7vWlfYhU2XhwMEc-sfkcw2qOUlG7opna(qn_mlN*rBr4E3x6L"
     
     
     class var sharedInstance:ServerManager {

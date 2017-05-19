@@ -30,9 +30,33 @@ class Question:StackDataObject {
             return dataDictionary["question_id"] as? Int
         }
     }
-    var score:Int? {
+    var score:Int {
         get {
-            return dataDictionary["score"] as? Int
+            if guessedAnswerID == -1 {
+                return 0
+            }
+            let acceptedAnswer = answers?.filter({$0.isAccepted}).first
+//            let guessedAnswer = answers?.filter({$0.id == guessedAnswerID}).first
+            
+            if acceptedAnswer?.id == guessedAnswerID {
+                return 10
+            } else {
+                guard let upvotes = acceptedAnswer?.upvoteCounts, let downvotes = acceptedAnswer?.downvoteCounts else {
+                    return 0
+                }
+                
+                let finalVotes = Double(upvotes - downvotes)
+                
+                if finalVotes > 100 {
+                    return 10
+                } else if finalVotes > 0 {
+                    return Int(ceil(finalVotes / 10.0))
+                } else if finalVotes > -50 {
+                    return Int(ceil(finalVotes / 10.0))
+                } else {
+                    return -5
+                }
+            }
         }
     }
     
@@ -47,12 +71,21 @@ class Question:StackDataObject {
     
     // Initialize with default values
     var guessedAnswerID:Int = -1
+    var guessedCorrectly:Bool {
+        get {
+            return correctAnswer()?.id == guessedAnswerID
+        }
+    }
     
     
     var answers:[Answer]?
     
     func selectGuess(answerID:Int) {
         guessedAnswerID = answerID
+    }
+    
+    func correctAnswer() -> Answer? {
+        return answers?.filter({$0.isAccepted}).first
     }
     
 }

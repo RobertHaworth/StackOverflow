@@ -40,6 +40,18 @@ class StackDataObject {
         }
     }
     
+    var upvoteCounts:Int? {
+        get {
+            return dataDictionary["up_vote_count"] as? Int
+        }
+    }
+    
+    var downvoteCounts:Int? {
+        get {
+            return dataDictionary["down_vote_count"] as? Int
+        }
+    }
+    
     var body:NSAttributedString? {
         get {
             guard let HTMLString = dataDictionary["body"] as? String else {

@@ -8,11 +8,16 @@
 
 import UIKit
 
-class QuestionsTableViewController: UITableViewController {
+class QuestionsTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     
     fileprivate let QuestionCellIdentifier = "QuestionCell"
     private var guessedOnly = false
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var totalPointsLabel: UILabel!
+    @IBOutlet weak var totalPercentageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +25,15 @@ class QuestionsTableViewController: UITableViewController {
         ServerManager.sharedInstance.getQuestions { [weak self] in
             self?.tableView.reloadData()
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let path = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: path, animated: true)
+        }
+        updateScore()
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,25 +43,25 @@ class QuestionsTableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return QuestionManager.sharedInstance.questions(guessedOnly: guessedOnly).count
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100.0
     }
 
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: QuestionCellIdentifier, for: indexPath)
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cellCast = cell as? QuestionTableViewCell {
             let questionArray = QuestionManager.sharedInstance.questions(guessedOnly: guessedOnly)
             guard indexPath.row < questionArray.count else {
@@ -108,5 +122,21 @@ class QuestionsTableViewController: UITableViewController {
             self?.tableView.reloadData()
         }) { complete in
         }
+    }
+    
+    func updateScore() {
+        let questions = QuestionManager.sharedInstance.questions(guessedOnly: true)
+        var totalScore = 0
+        var totalPercent = 0
+        questions.forEach({ question in
+            totalScore += question.score
+        })
+        
+        if questions.count != 0 {
+            totalPercent = Int((Double(questions.filter({ return $0.guessedCorrectly }).count) / Double(questions.count)) * 100.0)
+        }
+        
+        totalPointsLabel.text = "\(totalScore)"
+        totalPercentageLabel.text = "\(totalPercent)%"
     }
 }

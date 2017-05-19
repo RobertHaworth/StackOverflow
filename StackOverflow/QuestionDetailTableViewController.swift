@@ -131,13 +131,17 @@ class QuestionDetailTableViewController: UITableViewController {
                 }
                 answerCell.bodyTextView.attributedText = answer.body
                 
-                if question?.guessedAnswerID != -1 {
+                guard let unwrappedQuestion = question else {
+                    return
+                }
+                
+                if unwrappedQuestion.guessedAnswerID != -1 {
                     //answered
-                    if (question?.guessedAnswerID == answer.id) && !answer.isAccepted {
+                    if (unwrappedQuestion.guessedAnswerID == answer.id) && !answer.isAccepted {
                         // This is the guessed answer but not the correct one
                         answerCell.state = .userAnswer
                         
-                    } else if (question?.guessedAnswerID == answer.id) && answer.isAccepted {
+                    } else if unwrappedQuestion.guessedCorrectly && answer.isAccepted {
                         answerCell.state = [.userAnswer, .correctAnswer]
                     } else if answer.isAccepted {
                         answerCell.state = .correctAnswer
