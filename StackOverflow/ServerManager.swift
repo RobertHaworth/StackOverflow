@@ -10,12 +10,14 @@ import UIKit
 import Alamofire
 import SVProgressHUD
 
+// API Specific values
 private let baseURL = "https://api.stackexchange.com"
 private let apiURL = baseURL + "/2.2"
 private let serverHeaders:Dictionary<String, String> = [:]
 
 private let _sharedInstance = ServerManager()
 
+// Custom Error states for description centralization
 enum StackoverflowError:Error {
     case itemArrayMissing, dictionaryMissing, questionIDMissing
     
@@ -39,22 +41,24 @@ final class ServerManager {
      *
      * This filter ID represents a filter that will return back the properties listed below
      *
-     * - backoff
-     * - error_id
-     * - error_message
-     * - error_name
-     * - has_more
-     * - items
-     * - quota_max
-     * - quota_remaining
+     * - .backoff
+     * - .error_id
+     * - .error_message
+     * - .error_name
+     * - .has_more
+     * - .items
+     * - .quota_max
+     * - .quota_remaining
      * - answer.answer_id
      * - answer.body
+     * - answer.down_vote_count
      * - answer.is_accepted
      * - answer.link
      * - answer.owner
      * - answer.question_id
      * - answer.score
      * - answer.title
+     * - answer.up_vote_count
      * - error.description
      * - error.error_id
      * - error.error_name
@@ -64,16 +68,23 @@ final class ServerManager {
      * - question.accepted_answer_id
      * - question.answer_count
      * - question.body
+     * - question.down_vote_count
      * - question.is_answered
+     * - question.link
      * - question.owner
      * - question.question_id
      * - question.score
      * - question.tags
      * - question.title
+     * - question.up_vote_count
      * - question.view_count
      * - shallow_user.display_name
+     * - shallow_user.link
      * - shallow_user.profile_image
      * - shallow_user.user_id
+     * - tag.count
+     * - tag.name
+     * - tag.user_id
      */
     private let filterID = "!)TMXTVHp7vWlfYhU2XhwMEc-sfkcw2qOUlG7opna(qn_mlN*rBr4E3x6L"
     
@@ -83,24 +94,21 @@ final class ServerManager {
     }
     
     func getQuestions(completion:(() -> ())?) {
-        // Add back in for filter - &filter=!)-gqw_JGd9NoFjDkbjrsrj*5Sz4-e(R2.8geoP_Q&key=\(StackOverflowAPIKey)
-        
         Alamofire.request(apiURL + "/search/advanced?order=desc&sort=activity&accepted=True&answers=2&site=\(site)&filter=\(filterID)", method: .get, parameters: nil, encoding: JSONEncoding(options:.prettyPrinted), headers: serverHeaders).responseJSON { [weak self] dataResponse in
             switch dataResponse.result {
                 case .failure(let error):
                     self?.presentError(error: error)
                 case .success(let dataValue as Dictionary<String, AnyObject>):
-                    guard let itemsArray = dataValue["items"] as? Array<Dictionary<String, AnyObject>> else {
-                        self?.presentError(error: StackoverflowError.itemArrayMissing)
+                    guard let items = self?.getItemArray(dictionary: dataValue) else {
                         completion?()
                         return
                     }
                 
-                    let questionArray = itemsArray.map({ return Question(dictionary:$0)})
+                    // Convert returned collection of item dictionaries to Question objects
+                    let questionArray = items.map({ return Question(dictionary:$0)})
                     QuestionManager.sharedInstance.updateQuestions(newQuestions: questionArray)
                     completion?()
                 default:
-                    print("Success with non-dictionary root")
                     self?.presentError(error: StackoverflowError.dictionaryMissing)
                     completion?()
             }
@@ -116,13 +124,11 @@ final class ServerManager {
         Alamofire.request(apiURL + "/questions/\(questionID)/answers?site=\(site)&filter=\(filterID)", method:.get, parameters: nil, encoding: JSONEncoding(options: .prettyPrinted), headers:serverHeaders).responseJSON { [weak self] dataResponse in
             switch dataResponse.result {
                 case .failure(let error):
-                    print("error found: \(error)")
                     self?.presentError(error: error)
+                    completion?()
+                    return
                 case .success(let dataValue as Dictionary<String, AnyObject>):
-//                    print(dataValue)
-                    guard let items = dataValue["items"] as? Array<Dictionary<String, AnyObject>> else {
-                        print("unable to find items array")
-                        self?.presentError(error: StackoverflowError.itemArrayMissing)
+                    guard let items = self?.getItemArray(dictionary: dataValue) else {
                         completion?()
                         return
                     }
@@ -130,13 +136,14 @@ final class ServerManager {
                     question.answers = items.map({ return Answer(dictionary: $0)})
                     completion?()
                 default:
-                    print("Success with non-dictionary root")
                     self?.presentError(error: StackoverflowError.dictionaryMissing)
                     completion?()
             }
         }
     }
     
+    
+    // Currently not used, future implementation for search/filtering of questions and potentially answers
     func getTags(completion:(([Tag]?) -> ())?) {
         Alamofire.request(apiURL + "/tags?order=desc&sort=popular&site=\(site)", method: .get, parameters: nil, encoding: JSONEncoding(options:.prettyPrinted), headers: serverHeaders).responseJSON { [weak self] dataResponse in
             switch dataResponse.result {
@@ -147,9 +154,7 @@ final class ServerManager {
                 case .success(let dataValue as Dictionary<String, AnyObject>):
                     print(dataValue)
                 
-                    guard let items = dataValue["items"] as? Array<Dictionary<String, AnyObject>> else {
-                        print("unable to find items array")
-                        self?.presentError(error: StackoverflowError.itemArrayMissing)
+                    guard let items = self?.getItemArray(dictionary: dataValue) else {
                         completion?(nil)
                         return
                     }
@@ -166,6 +171,16 @@ final class ServerManager {
         }
     }
     
+    // Convenience method for retrieving the items collection. This wrapper is used commonly to return collections from StackOverflow API.
+    private func getItemArray(dictionary:Dictionary<String, AnyObject>) -> Array<Dictionary<String, AnyObject>>? {
+        guard let items = dictionary["items"] as? Array<Dictionary<String, AnyObject>> else {
+            self.presentError(error: StackoverflowError.itemArrayMissing)
+            return nil
+        }
+        return items
+    }
+    
+    // Convenience method for displaying Errors to the user
     func presentError(error:Error) {
         SVProgressHUD.showError(withStatus: error.localizedDescription)
     }

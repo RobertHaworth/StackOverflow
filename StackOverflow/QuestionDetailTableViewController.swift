@@ -27,11 +27,6 @@ class QuestionDetailTableViewController: UITableViewController {
         ServerManager.sharedInstance.getAnswers(question: unwrappedQuestion) { [weak self] in
             self?.tableView.reloadData()
         }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -117,7 +112,6 @@ class QuestionDetailTableViewController: UITableViewController {
                 }
                 
                 questionCell.bodyTextView.attributedText = question?.body
-                questionCell.questionURL = question?.link
             case 1:
                 
                 guard let answerCell = cell as? AnswerDetailTableViewCell else {
@@ -152,7 +146,6 @@ class QuestionDetailTableViewController: UITableViewController {
                 } else {
                     answerCell.state = .notGuessed
                 }
-//                answerCell.state
             default:
                 print("unknown section implemented")
                 return

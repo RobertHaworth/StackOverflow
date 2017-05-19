@@ -22,6 +22,7 @@ class QuestionManager {
         questions = newQuestions
     }
     
+    // Returns all known questions with an optional filter for questions that have a user guess
     func questions(guessedOnly:Bool) -> [Question] {
         if guessedOnly {
             return questions.filter() { return $0.guessedAnswerID != -1 }

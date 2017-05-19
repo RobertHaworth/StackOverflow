@@ -36,7 +36,6 @@ class Question:StackDataObject {
                 return 0
             }
             let acceptedAnswer = answers?.filter({$0.isAccepted}).first
-//            let guessedAnswer = answers?.filter({$0.id == guessedAnswerID}).first
             
             if acceptedAnswer?.id == guessedAnswerID {
                 return 10

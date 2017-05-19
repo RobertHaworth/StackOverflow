@@ -11,8 +11,6 @@ import UIKit
 struct AnswerState: OptionSet {
     let rawValue:Int
     
-    
-    
     static let notGuessed = AnswerState(rawValue: 1 << 0)
     static let userAnswer = AnswerState(rawValue: 1 << 1)
     static let correctAnswer = AnswerState(rawValue: 1 << 2)
@@ -41,11 +39,6 @@ class Answer:StackDataObject {
                 return false
             }
             return accepted
-        }
-    }
-    var score:Int? {
-        get {
-            return dataDictionary["score"] as? Int
         }
     }
 }
