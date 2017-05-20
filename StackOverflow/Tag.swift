@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Placeholder class. This is going to be used
 class Tag {
     var name:String? {
         get {

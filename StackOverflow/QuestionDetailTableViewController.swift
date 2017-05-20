@@ -12,13 +12,13 @@ import SVProgressHUD
 class QuestionDetailTableViewController: UITableViewController {
     
     var question:Question?
+    
     fileprivate let QuestionDetailCellIdentifier = "QuestionDetailCell"
     fileprivate let AnswerDetailCellIdentifer = "AnswerDetailCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
         guard let unwrappedQuestion = question else {
             SVProgressHUD.showError(withStatus: "Unable to find question to get answers")
             return
@@ -27,11 +27,6 @@ class QuestionDetailTableViewController: UITableViewController {
         ServerManager.sharedInstance.getAnswers(question: unwrappedQuestion) { [weak self] in
             self?.tableView.reloadData()
         }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -86,9 +81,6 @@ class QuestionDetailTableViewController: UITableViewController {
             default: cell = tableView.dequeueReusableCell(withIdentifier: AnswerDetailCellIdentifer, for: indexPath)
         }
         
-        
-        // Configure the cell...
-
         return cell
     }
     
@@ -130,14 +122,16 @@ class QuestionDetailTableViewController: UITableViewController {
                 }
                 
                 if unwrappedQuestion.guessedAnswerID != -1 {
-                    //answered
+                    // guessed
                     if (unwrappedQuestion.guessedAnswerID == answer.id) && !answer.isAccepted {
                         // This is the guessed answer but not the correct one
                         answerCell.state = .userAnswer
                         
                     } else if unwrappedQuestion.guessedCorrectly && answer.isAccepted {
+                        // This is the guessed AND correct answer.
                         answerCell.state = [.userAnswer, .correctAnswer]
                     } else if answer.isAccepted {
+                        // This is the correct answer
                         answerCell.state = .correctAnswer
                     } else {
                         answerCell.state = []
@@ -156,8 +150,6 @@ class QuestionDetailTableViewController: UITableViewController {
         guard indexPath.section == 1 && question?.guessedAnswerID == -1 else {
             return
         }
-        
-        
         
         guard let answerID = question?.answers?[indexPath.row].id else {
             return

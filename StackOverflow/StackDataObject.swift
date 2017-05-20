@@ -10,6 +10,8 @@ import UIKit
 
 class StackDataObject {
     
+    
+    // Special property. This property changes keys dependent upon data type. Default accessor implemented here but expected to be overridden by sub classes.
     private(set) var id:Int?
     
     var link:String? {
@@ -25,12 +27,6 @@ class StackDataObject {
             }
             
             return htmlString(HTMLString: HTMLString)
-        }
-    }
-    
-    var authorName:String? {
-        get {
-            return owner?.name
         }
     }
     
@@ -62,8 +58,14 @@ class StackDataObject {
         }
     }
     
+    var authorName:String? {
+        get {
+            return owner?.name
+        }
+    }
+    
+    // Core data objects.
     var owner:User?
-
     var dataDictionary:Dictionary<String, AnyObject>
     
     init(dictionary:Dictionary<String, AnyObject>) {
@@ -71,6 +73,7 @@ class StackDataObject {
         consumeOwner()
     }
     
+    // Function to take the JSON owner representation and convert it to the ease of use User object.
     private func consumeOwner() {
         guard let ownerDictionary = dataDictionary["owner"] as? Dictionary<String, AnyObject> else {
             print("unable to find owner")
@@ -79,6 +82,7 @@ class StackDataObject {
         owner = User(userDict: ownerDictionary)
     }
     
+    // Function to translate String containing HTML markup into a interpreted attributed string for correct representatino.
     private func htmlString(HTMLString:String) -> NSAttributedString? {
         let data = HTMLString.data(using: String.Encoding.unicode)
         

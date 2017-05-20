@@ -35,12 +35,7 @@ class QuestionsTableViewController: UIViewController, UITableViewDataSource, UIT
         }
         updateScore()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
     // MARK: - Table view data source
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -115,6 +110,7 @@ class QuestionsTableViewController: UIViewController, UITableViewDataSource, UIT
         guessedOnly = sender.selectedSegmentIndex == 1 ? false : true
         transitionTableView()
     }
+    
     func transitionTableView() {
         guessedOnly = !guessedOnly
         
