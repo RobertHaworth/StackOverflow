@@ -16,5 +16,7 @@ class QuestionTableViewCell: UITableViewCell {
     @IBOutlet weak var answersCountLabel: UILabel!
     @IBOutlet weak var viewsCountLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
+    @IBOutlet weak var earnedPointsLabel: UILabel!
+    @IBOutlet weak var earnedPointsValueLabel: UILabel!
 
 }

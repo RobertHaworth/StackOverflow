@@ -69,6 +69,16 @@ class QuestionsTableViewController: UIViewController, UITableViewDataSource, UIT
             cellCast.authorLabel.text = question.owner?.name
             cellCast.viewsCountLabel.text = "\(question.viewCount)"
             cellCast.answersCountLabel.text = "\(question.answerCount)"
+            
+            if question.guessedAnswerID != -1 {
+                cellCast.earnedPointsLabel.isHidden = false
+                cellCast.earnedPointsValueLabel.isHidden = false
+                cellCast.earnedPointsValueLabel.text = "\(question.score)"
+            } else {
+                cellCast.earnedPointsLabel.isHidden = true
+                cellCast.earnedPointsValueLabel.isHidden = true
+            }
+            
             guard let profileImageString = question.owner?.profileImageURL else {
                 print("no image found")
                 return
